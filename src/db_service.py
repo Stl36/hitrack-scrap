@@ -1,19 +1,27 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean, JSON
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean, JSON, Enum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime, timedelta
 from payload import dbhost, dbport, database, dbpassword, dbusername
+import enum
 
 
 # Создаем подключение к базе данных
 engine = create_engine(f'postgresql://{dbusername}:{dbpassword}@{dbhost}:{dbport}/{database}')
 Base = declarative_base()
 
+
+class PriotiyEnum(enum.Enum):
+    HIGH = 'high'
+    AVERAGE = 'average'
+
+
 class DBTrigger(Base):
     __tablename__ = 'triggers'
 
     id = Column(Integer, primary_key=True)
     trigger_string = Column(JSON)
+    priotity = Column(Enum(PriotiyEnum), default=PriotiyEnum.HIGH)
     # item = Column(String)
     # name = Column(String)
     # location = Column(String)
