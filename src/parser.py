@@ -68,8 +68,8 @@ class HitrackParser:
                         'Site ID', 'IP Address 1', 'IP Address 2')
         active_triggers = []
         if len(table_data) > 11:
-            counts = len(table_data)/12
-            counts = int(counts)
+            counts = int(len(table_data)/12)
+            # counts = int(counts)
             for count in range(counts):
                 nested_dict = {}
                 modifyer = count*12
